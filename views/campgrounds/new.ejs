@@ -23,12 +23,11 @@
           name="campground[location]" />
         <div class="valid-feedback">Looks good!</div>
       </div>
-      <!-- <div class="mb-3">
-        <label for="image" class="form-label">Image Url</label>
-        <input type="text" class="form-control" id="image" required name="campground[image]" />
-        <div class="valid-feedback">Looks good!</div>
-      </div> -->
-      <input type="file" name="image" id="" multiple />
+      <div class="mb-3 custom-file">
+        <label for="image" class="form-label">Upload images</label>
+        <label for="image" class="custom-file-label"></label>
+        <input class="form-control" type="file" id="image" name="image" multiple />
+      </div>
       <div class="mb-3">
         <label for="price" class="form-label">Campground Price</label>
         <div class="input-group">
