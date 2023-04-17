@@ -12,10 +12,14 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
+const MongoStore = require("connect-mongo");
+// "mongodb://localhost:27017/yelp-camp"
+const dbUrl = "mongodb://localhost:27017/yelp-camp";
 
 const usersRoutes = require("./routes/users");
 const campgroundsRoutes = require("./routes/campgrounds");
 const reviewsRoutes = require("./routes/reviews");
+const { log } = require("console");
 const scriptSrcUrls = [
   "https://stackpath.bootstrapcdn.com/",
   "https://api.tiles.mapbox.com/",
@@ -40,7 +44,7 @@ const connectSrcUrls = [
   "https://events.mapbox.com/",
 ];
 const fontsrcUrls = [];
-mongoose.connect("mongodb://localhost:27017/yelp-camp", {
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   // useCreateIndex: true,
   useUnifiedTopology: true,
@@ -63,6 +67,10 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 const sessionConfig = {
+  store: MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+  }),
   secret: "---keepthisawayfrompublic---",
   resave: false,
   saveUninitialized: true,
